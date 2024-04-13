@@ -46,7 +46,7 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
-
+./ProjectSettings/SceneTemplateSettings.json
 # Unity3D generated meta files
 *.pidb.meta
 *.pdb.meta
