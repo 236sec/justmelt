@@ -5,11 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float jumpForce = 10f;
     private float moveDirection = 0f;
-    [SerializeField] private bool canDoubleJump = false;
-
-    [SerializeField] private LayerMask jumpableGround;
 
     private Rigidbody2D rb;
     private BoxCollider2D coll;
@@ -33,33 +29,13 @@ public class PlayerMovement : MonoBehaviour
         float verticalInput = Input.GetAxisRaw("Vertical");
         Vector2 movementDirection = new Vector2(horizontalInput, verticalInput).normalized;
         rb.velocity = movementDirection * moveSpeed;
-
         Invoke("IsGrounded",0);
-
-        // Jump
-        if (Input.GetButtonDown("Jump")) 
-        {
-            if (IsGrounded()) 
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                canDoubleJump = true; // set to true on regular jump
-            }
-            if (canDoubleJump && !IsGrounded()) 
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                canDoubleJump = false; // set to false after double jump
-            }
-
-        }
-
         UpdateAnimationState();
-
     }
 
     private void UpdateAnimationState()
     {
         MovementState state;
-
         // Flip sprite if moving in opposite direction
         // Return whether character is running or not
         if (moveDirection > 0)
@@ -95,10 +71,9 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()   
     {
-        RaycastHit2D hit = Physics2D.BoxCast(coll.bounds.center,coll.bounds.size,0f,Vector2.down,.1f,jumpableGround);
+        RaycastHit2D hit = Physics2D.BoxCast(coll.bounds.center,coll.bounds.size,0f,Vector2.down,.1f);
         if (hit.collider != null) 
         {   
-            canDoubleJump = true; // reset double jump if grounded again
             return true;
         }
         return false;
