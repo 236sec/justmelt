@@ -20,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
         coll = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        // Freeze rotation along the Z-axis
+        rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     private void Update()
