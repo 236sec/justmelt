@@ -6,7 +6,7 @@ public class Parry : MonoBehaviour
 {
     // Tag of the bullet GameObject
     public string bulletTag = "Bullet";
-
+    private Rigidbody2D rb;
     // Key to press for parrying
     public KeyCode parryKey = KeyCode.Space;
     void Start () {

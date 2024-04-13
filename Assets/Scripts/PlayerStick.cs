@@ -4,18 +4,19 @@ using UnityEngine;
 
 public class PlayerStick : MonoBehaviour
 {
-    public GameObject player; // Reference to the player GameObject
+    public Rigidbody2D playerRigidbody; // Reference to the player's Rigidbody2D
 
     void Start()
     {
-        // Check if player reference is assigned
-        if (player == null)
-        {
-            Debug.LogWarning("Player reference is not assigned in StickWithPlayer script!");
-            return;
-        }
+        AddFixedJoint();
+    }
 
-        // Make the sword GameObject a child of the player GameObject
-        transform.parent = player.transform;
+    void AddFixedJoint()
+    {
+        // Add FixedJoint2D component to the sword GameObject
+        FixedJoint2D fixedJoint = gameObject.AddComponent<FixedJoint2D>();
+
+        // Connect the FixedJoint2D to the player's Rigidbody2D
+        fixedJoint.connectedBody = playerRigidbody;
     }
 }
