@@ -31,4 +31,15 @@ public class BulletProperty : MonoBehaviour
         yield return new WaitForSeconds(lifetime);
         Destroy(gameObject);
     }
+
+    private void OnTriggerEnter2D(Collider2D other) {
+        if (other.GetComponent<PlayerTag>() is null) return;
+        PlayerHealth health = other.GetComponent<PlayerHealth>();
+
+        if (health.godMode) return;
+
+        health.TakeDamage(damage);
+        // Debug.Log("Damaged player: current health is " + health.currentHP.ToString());
+        Destroy(gameObject);
+    }
 }

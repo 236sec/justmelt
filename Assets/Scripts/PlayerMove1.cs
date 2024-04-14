@@ -1,15 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float dodgeSpeed = 25f;
+    [SerializeField] private float dodgeCooldown = 5f;
+
+    [SerializeField] private SwordParry swordParry;
 
     private PlayerHealth playerHealth;
 
     private float currentDodgeSpeed = 0f;
+    private float currentDodgeCooldown = 0f;
 
     Vector2 moveDirection;
 
@@ -39,8 +44,11 @@ public class PlayerMovement : MonoBehaviour
         moveDirection = new Vector2(horizontalInput, verticalInput).normalized;
 
         if (Input.GetKeyDown(KeyCode.LeftShift)) {
-            Debug.Log(currentDodgeSpeed);
             Dodge(dodgeSpeed);
+        }
+
+        if (Input.GetMouseButtonDown(0)) {
+            swordParry.Parry();
         }
     }
 
@@ -49,6 +57,13 @@ public class PlayerMovement : MonoBehaviour
 
         rb.velocity = moveDirection * moveSpeed + dodgeVelocity;
         currentDodgeSpeed = Mathf.Lerp(currentDodgeSpeed, 0, 0.1f);
+
+        if (currentDodgeCooldown > 0) {
+            currentDodgeCooldown -= Time.fixedDeltaTime;
+        }
+        else {
+            currentDodgeCooldown = 0;
+        }
 
         if (currentDodgeSpeed >= 0.25f * dodgeSpeed) {
             playerHealth.godMode = true;
@@ -59,7 +74,8 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void Dodge(float speed) {
+        if (currentDodgeCooldown > 0) return;
         currentDodgeSpeed = speed;
-        // rb.AddForce(direction * dodgeSpeed, ForceMode2D.Impulse);
+        currentDodgeCooldown = dodgeCooldown;
     }
 }

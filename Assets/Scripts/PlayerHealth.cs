@@ -30,15 +30,6 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (godMode) return;
-
-        BulletTag bTag = other.gameObject.GetComponent<BulletTag>();
-        if (bTag != null)
-        {
-            BulletProperty bProp = other.gameObject.GetComponent<BulletProperty>();
-            Debug.Log("Current HP is: " + currentHP);
-            TakeDamage(bProp.damage);
-            Destroy(other.gameObject);
-        }
+        
     }
 }
