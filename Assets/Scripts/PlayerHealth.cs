@@ -5,7 +5,10 @@ using UnityEngine;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHP = 50;
+
     public int currentHP;
+    public bool godMode = false;
+    
     //private SpriteRenderer sprite;
     // Start is called before the first frame update
     void Start()
@@ -27,6 +30,8 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (godMode) return;
+
         BulletTag bTag = other.gameObject.GetComponent<BulletTag>();
         if (bTag != null)
         {
