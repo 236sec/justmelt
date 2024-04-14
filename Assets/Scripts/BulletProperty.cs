@@ -7,6 +7,7 @@ public class BulletProperty : MonoBehaviour
     [SerializeField] private float speed = 10f;
     [SerializeField] private int damage = 10;
     private Rigidbody2D rb;
+    public GameObject bulletFriend;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,13 +28,6 @@ public class BulletProperty : MonoBehaviour
                 playerHP.TakeDamage(damage);
             }
             Destroy(gameObject);
-        }
-        SwordTag sTag = other.gameObject.GetComponent<SwordTag>();
-        if (sTag != null)
-        {
-            Debug.Log("Sword Block");
-            Vector2 reflect = new Vector2(-rb.velocity.x, -rb.velocity.y);
-            rb.velocity = reflect * speed;
         }
     }
 }
