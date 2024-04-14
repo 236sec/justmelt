@@ -335,6 +335,8 @@ GameObject:
   - component: {fileID: 1216184420}
   - component: {fileID: 1216184419}
   - component: {fileID: 1216184418}
+  - component: {fileID: 1216184422}
+  - component: {fileID: 1216184421}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -423,6 +425,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1216184421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216184417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 878de05f360e2704ab15bb2d57f9aae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  item: {fileID: 517933495527732013, guid: c60267334af5ba14fb8e23c999a2008a, type: 3}
+--- !u!114 &1216184422
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1216184417}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68c12328cc87b884197f5d7cfec59e23, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  initialHP: 100
+  currentHP: 0
+  dropManager: {fileID: 1216184421}
 --- !u!1 &1642447046
 GameObject:
   m_ObjectHideFlags: 0
