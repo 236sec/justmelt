@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
-    private float moveDirection = 0f;
+    [SerializeField] private float dodgeSpeed = 25f;
 
     private Rigidbody2D rb;
     private BoxCollider2D coll;
@@ -29,6 +29,14 @@ public class PlayerMovement : MonoBehaviour
         float verticalInput = Input.GetAxisRaw("Vertical");
         Vector2 movementDirection = new Vector2(horizontalInput, verticalInput).normalized;
         rb.velocity = movementDirection * moveSpeed;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift)) {
+            Debug.Log(movementDirection);
+            Dodge(movementDirection);
+        }
     }
-    
+
+    private void Dodge(Vector2 direction) {
+        rb.AddForce(direction * dodgeSpeed, ForceMode2D.Impulse);
+    }
 }

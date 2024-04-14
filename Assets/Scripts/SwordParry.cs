@@ -30,9 +30,9 @@ public class SwordParry : MonoBehaviour
             // Rigidbody2D reflectedRb = reflectedB.GetComponent<Rigidbody2D>();
             // reflectedRb.velocity = Vector2.left * bProp.speed;
 
-            Vector2 reflectedVector = Vector2.Reflect(bProp.GetVelocity().normalized, Vector2.up);
+            // Vector2 reflectedVector = Vector2.Reflect(bProp.GetVelocity().normalized, Vector2.up);
 
-            reflectedBp.SetVelocity(reflectedVector * reflectedBp.speed);
+            reflectedBp.SetVelocity(-bProp.GetVelocity());
 
             Destroy(other.gameObject);
         }

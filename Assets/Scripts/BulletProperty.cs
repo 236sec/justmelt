@@ -6,11 +6,17 @@ public class BulletProperty : MonoBehaviour
 {
     public float speed = 10f;
     public int damage = 10;
+    public float lifetime = 10f;
+    
     private Rigidbody2D rb;
 
-    void Awake()
+    private void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start() {
+        StartCoroutine(Cleanup());
     }
 
     public void SetVelocity(Vector2 vel) {
@@ -19,5 +25,10 @@ public class BulletProperty : MonoBehaviour
     
     public Vector2 GetVelocity() {
         return rb.velocity;
+    }
+
+    private IEnumerator Cleanup() {
+        yield return new WaitForSeconds(lifetime);
+        Destroy(gameObject);
     }
 }

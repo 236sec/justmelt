@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using BulletPatterns;
+
 public class EnemyShoot : MonoBehaviour
 {
     public GameObject bullet;
@@ -17,10 +19,20 @@ public class EnemyShoot : MonoBehaviour
     {
         if(attackCooldown <= 0)
         {
-            GameObject bulletObject = Instantiate(bullet, transform.position, transform.rotation);
-            BulletProperty bulletProperty = bulletObject.GetComponent<BulletProperty>();
+            int[] angles = { -45, 0, 45 };
 
-            bulletProperty.SetVelocity(bulletProperty.speed * Vector2.down + Vector2.left * 5f);
+            for (int i = 0; i < 3; i++) {
+                GameObject bulletObject = Instantiate(bullet, transform.position, transform.rotation);
+                BulletProperty bulletProperty = bulletObject.GetComponent<BulletProperty>();
+
+                Vector2 direction = Quaternion.Euler(0, 0, angles[i]) * Vector2.down;
+                bulletProperty.SetVelocity(direction * bulletProperty.speed);
+            }
+
+            /*
+            NormalBulletPattern normalBulletPattern = new (bulletProperty);
+            bulletObject.AddComponent<NormalBulletPattern>();
+            */
 
             attackCooldown = initialAttackCooldown;
         }
