@@ -8,10 +8,16 @@ public class BulletProperty : MonoBehaviour
     public int damage = 10;
     private Rigidbody2D rb;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
-        rb.velocity = Vector2.down * speed;
     }
 
+    public void SetVelocity(Vector2 vel) {
+        rb.velocity = vel;
+    }
+    
+    public Vector2 GetVelocity() {
+        return rb.velocity;
+    }
 }

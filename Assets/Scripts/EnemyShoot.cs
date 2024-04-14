@@ -17,7 +17,11 @@ public class EnemyShoot : MonoBehaviour
     {
         if(attackCooldown <= 0)
         {
-            Instantiate(bullet, transform.position, transform.rotation);
+            GameObject bulletObject = Instantiate(bullet, transform.position, transform.rotation);
+            BulletProperty bulletProperty = bulletObject.GetComponent<BulletProperty>();
+
+            bulletProperty.SetVelocity(bulletProperty.speed * Vector2.down + Vector2.left * 5f);
+
             attackCooldown = initialAttackCooldown;
         }
         else

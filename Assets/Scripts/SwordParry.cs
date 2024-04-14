@@ -20,12 +20,20 @@ public class SwordParry : MonoBehaviour
     {
         BulletTag bTag = other.gameObject.GetComponent<BulletTag>();
         BulletProperty bProp = other.gameObject.GetComponent<BulletProperty>();
+
         if (bTag != null)   
         {
             Debug.Log("Sword Block");
             GameObject reflectedB = Instantiate(reflectedBullet, transform.position, transform.rotation);
+            BulletProperty reflectedBp = reflectedB.GetComponent<BulletProperty>();
+
             // Rigidbody2D reflectedRb = reflectedB.GetComponent<Rigidbody2D>();
             // reflectedRb.velocity = Vector2.left * bProp.speed;
+
+            Vector2 reflectedVector = Vector2.Reflect(bProp.GetVelocity().normalized, Vector2.up);
+
+            reflectedBp.SetVelocity(reflectedVector * reflectedBp.speed);
+
             Destroy(other.gameObject);
         }
     }
