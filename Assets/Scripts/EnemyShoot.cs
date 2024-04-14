@@ -8,13 +8,11 @@ public class EnemyShoot : MonoBehaviour
     [SerializeField] private float initialAttackCooldown;
     private float attackCooldown;
 
-    // Start is called before the first frame update
     void Start()
     {
         attackCooldown = initialAttackCooldown;    
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(attackCooldown <= 0)

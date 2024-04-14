@@ -24,4 +24,16 @@ public class PlayerHealth : MonoBehaviour
     {
         currentHP -= damage;
     }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        BulletTag bTag = other.gameObject.GetComponent<BulletTag>();
+        if (bTag != null)
+        {
+            BulletProperty bProp = other.gameObject.GetComponent<BulletProperty>();
+            Debug.Log("Current HP is: " + currentHP);
+            TakeDamage(bProp.damage);
+            Destroy(other.gameObject);
+        }
+    }
 }

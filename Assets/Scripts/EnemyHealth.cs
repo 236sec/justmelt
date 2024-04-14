@@ -8,13 +8,11 @@ public class EnemyHealth : MonoBehaviour
     [SerializeField] private int currentHP;
     public MonsterDrop dropManager;
 
-    // Start is called before the first frame update
     void Start()
     {
         currentHP = initialHP;    
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckDeath();

@@ -4,29 +4,28 @@ using UnityEngine;
 
 public class SwordParry : MonoBehaviour
 {
-    // Start is called before the first frame update
+    public GameObject reflectedBullet; 
+
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
+
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
         BulletTag bTag = other.gameObject.GetComponent<BulletTag>();
-        if (bTag != null)
+        BulletProperty bProp = other.gameObject.GetComponent<BulletProperty>();
+        if (bTag != null)   
         {
             Debug.Log("Sword Block");
-            // Instantiate the bulletFriend
-            GameObject bullet = Instantiate(bulletFriend, transform.position, transform.rotation);
-            // Get the Rigidbody2D component of the bullet
-            Rigidbody2D bulletRb = bullet.GetComponent<Rigidbody2D>();
-            // Calculate the reflected velocity
-            Vector2 reflect = -Vector2.up * speed;
-            // Set the velocity of the bullet
-            bulletRb.velocity = reflect;
-
-            // Destroy the original bullet GameObject
+            GameObject reflectedB = Instantiate(reflectedBullet, transform.position, transform.rotation);
+            // Rigidbody2D reflectedRb = reflectedB.GetComponent<Rigidbody2D>();
+            // reflectedRb.velocity = Vector2.left * bProp.speed;
             Destroy(other.gameObject);
         }
     }
