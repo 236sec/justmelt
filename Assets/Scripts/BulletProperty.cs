@@ -44,6 +44,7 @@ public class BulletProperty : MonoBehaviour
         } else if (other.GetComponent<EnemyHealth>() is not null) {
             EnemyHealth health = other.GetComponent<EnemyHealth>();
             if (hurtEnemy) {
+                GameRound.instance.score += 100;
                 health.TakeDamage(damage);
                 Destroy(gameObject);
             }

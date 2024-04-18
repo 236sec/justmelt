@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class StatusUI : MonoBehaviour
 {
+    private GameRound game => GameRound.instance;
+
     [SerializeField] TextMeshProUGUI hpLabel;
     [SerializeField] TextMeshProUGUI parryLabel;
     [SerializeField] TextMeshProUGUI dodgeLabel;
@@ -13,6 +15,7 @@ public class StatusUI : MonoBehaviour
     [SerializeField] Bar parryBar;
     [SerializeField] Bar dodgeBar;
 
+    [Header("Objects")]
     [SerializeField] PlayerHealth playerHealth; 
     [SerializeField] EnemyHealth enemyHealth; 
     [SerializeField] SwordParry swordParry; 
@@ -22,7 +25,18 @@ public class StatusUI : MonoBehaviour
     {
         hpLabel.text = $"{playerHealth.currentHP}/{playerHealth.maxHP}";
         hpBar.SetValue((float)playerHealth.currentHP / playerHealth.maxHP);
-        enemyHpBar.SetValue((float)enemyHealth.currentHP / enemyHealth.initialHP);
+
+        if (!enemyHealth) {
+            enemyHealth = game.enemy?.GetComponent<EnemyHealth>();
+        }
+
+        if (!enemyHealth) {
+            enemyHpBar.gameObject.SetActive(false);
+        } else {
+            enemyHpBar.gameObject.SetActive(true);
+            enemyHealth = game.enemy.GetComponent<EnemyHealth>();
+            enemyHpBar?.SetValue((float)enemyHealth.currentHP / enemyHealth.initialHP);
+        }
 
         if (swordParry.currentCooldownTime < 0) {
             parryLabel.text = $"0.00s";

@@ -14,8 +14,15 @@ public class PlayerHealth : MonoBehaviour
         currentHP = maxHP;
     }
 
+    private void CheckDeath() { 
+        if (currentHP == 0) {
+            
+        }
+    }
+
     public void TakeDamage(int damage)
     {
         currentHP = Mathf.Clamp(currentHP - damage, 0, maxHP);
+        CheckDeath();
     }
 }
