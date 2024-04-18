@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyHealth : MonoBehaviour
 {
     public int initialHP;
-    [SerializeField] private int currentHP;
+    [SerializeField] public int currentHP;
     public MonsterDrop dropManager;
 
     void Start()
@@ -18,9 +18,9 @@ public class EnemyHealth : MonoBehaviour
         CheckDeath();
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
-        currentHP -= damage;
+        currentHP = Mathf.Clamp(currentHP - damage, 0, initialHP);
     }
 
     void CheckDeath()

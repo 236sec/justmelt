@@ -7,8 +7,9 @@ public class BulletProperty : MonoBehaviour
     public float speed = 10f;
     public int damage = 10;
     public float lifetime = 10f;
-    
+
     private Rigidbody2D rb;
+    public bool hurtEnemy = false;
 
     private void Awake()
     {
@@ -33,13 +34,19 @@ public class BulletProperty : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        if (other.GetComponent<PlayerTag>() is null) return;
-        PlayerHealth health = other.GetComponent<PlayerHealth>();
+        if (other.GetComponent<PlayerTag>() is not null) {
+            PlayerHealth health = other.GetComponent<PlayerHealth>();
 
-        if (health.godMode) return;
+            if (health.godMode) return;
 
-        health.TakeDamage(damage);
-        // Debug.Log("Damaged player: current health is " + health.currentHP.ToString());
-        Destroy(gameObject);
+            health.TakeDamage(damage);
+            Destroy(gameObject);
+        } else if (other.GetComponent<EnemyHealth>() is not null) {
+            EnemyHealth health = other.GetComponent<EnemyHealth>();
+            if (hurtEnemy) {
+                health.TakeDamage(damage);
+                Destroy(gameObject);
+            }
+        }
     }
 }

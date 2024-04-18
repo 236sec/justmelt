@@ -164,7 +164,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   damage: 10
-  lifetime: 10
+  lifetime: 5
+  hurtEnemy: 1
 --- !u!95 &4499282489767745056
 Animator:
   serializedVersion: 5

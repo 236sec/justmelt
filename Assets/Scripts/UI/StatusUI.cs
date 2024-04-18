@@ -8,15 +8,18 @@ public class StatusUI : MonoBehaviour
     [SerializeField] TextMeshProUGUI hpLabel;
     [SerializeField] TextMeshProUGUI parryLabel;
     [SerializeField] Bar hpBar;
+    [SerializeField] Bar enemyHpBar;
     [SerializeField] Bar parryBar;
 
     [SerializeField] PlayerHealth playerHealth; 
+    [SerializeField] EnemyHealth enemyHealth; 
     [SerializeField] SwordParry swordParry; 
 
     void Update()
     {
         hpLabel.text = $"{playerHealth.currentHP}/{playerHealth.maxHP}";
         hpBar.SetValue((float)playerHealth.currentHP / playerHealth.maxHP);
+        enemyHpBar.SetValue((float)enemyHealth.currentHP / enemyHealth.initialHP);
 
         if (swordParry.currentCooldownTime < 0) {
             parryLabel.text = $"0.00s";

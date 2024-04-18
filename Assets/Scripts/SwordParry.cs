@@ -29,7 +29,6 @@ public class SwordParry : MonoBehaviour
 
         foreach (Collider2D collider in colliders) {
             ParryBullet(collider);
-            Debug.Log(collider.gameObject.name);
         }
     }
 
