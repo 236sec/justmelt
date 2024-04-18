@@ -9,7 +9,7 @@ public class SwordParry : MonoBehaviour
 
     [SerializeField] private Vector2 hitboxSize = new Vector2(1, 1);
 
-    [SerializeField] private float currentCooldownTime = 0f;
+    public float currentCooldownTime = 0f;
 
     private void FixedUpdate() {
         if (currentCooldownTime > 0) {
