@@ -7,14 +7,14 @@ public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float dodgeSpeed = 25f;
-    [SerializeField] private float dodgeCooldown = 5f;
+    [SerializeField] public float dodgeCooldown = 5f;
 
     [SerializeField] private SwordParry swordParry;
 
     private PlayerHealth playerHealth;
 
     private float currentDodgeSpeed = 0f;
-    private float currentDodgeCooldown = 0f;
+    public float currentDodgeCooldown = 0f;
 
     Vector2 moveDirection;
 
