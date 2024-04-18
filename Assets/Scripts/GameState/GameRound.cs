@@ -9,6 +9,7 @@ public class GameRound : MonoBehaviour
 
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] Transform enemySpawnPosition;
+    [SerializeField] RoundStatusUI roundStatusUI;
 
     public int score = 0;
     public int round = 1;
@@ -19,6 +20,8 @@ public class GameRound : MonoBehaviour
 
     IEnumerator GameLoop() {
         while (true) {
+            yield return roundStatusUI.NewRoundNotifier(round);
+
             enemy = Instantiate(enemyPrefab, transform.parent);
             enemy.transform.position = enemySpawnPosition.position;
             EnemyHealth enemyHealth = enemy.GetComponent<EnemyHealth>();

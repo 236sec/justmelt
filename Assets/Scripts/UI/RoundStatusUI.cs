@@ -16,13 +16,30 @@ public class RoundStatusUI : MonoBehaviour
         
     }
 
-    public IEnumerator NewRoundNotifier() {
+    public IEnumerator NewRoundNotifier(int round) {
         newRoundLabel.gameObject.SetActive(true);
+        newRoundLabel.text = "ROUND " + round.ToString();
+        newRoundLabel.color = new Color(1, 1, 1, 0);
+        newRoundLabel.transform.localScale = new Vector3(2, 2, 2);
 
-        for (float i = 1; i > 0; i -= 0.1f) {
-            newRoundLabel.color = new Color(1, 1, 1, i);
-            yield return new WaitForSeconds(0.1f);
-        }
+        newRoundLabel.transform.LeanScale(new Vector3(1, 1, 1), 1f).setEaseInExpo();
+        LeanTween.value(newRoundLabel.gameObject, 0f, 1f, 1f)
+            .setOnUpdate((float value) => {
+                newRoundLabel.alpha = value;
+            })
+            .setEaseLinear();
+        yield return new WaitForSeconds(1f);
+
+        yield return new WaitForSeconds(2f);
+
+        LeanTween.value(newRoundLabel.gameObject, 1f, 0f, 1f)
+            .setOnUpdate((float value) => {
+                newRoundLabel.alpha = value;
+            })
+            .setEaseLinear();
+        yield return new WaitForSeconds(1f);
+
+        newRoundLabel.gameObject.SetActive(false);
     }
 
     void Update()

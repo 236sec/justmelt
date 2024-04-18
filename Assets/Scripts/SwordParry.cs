@@ -7,6 +7,7 @@ public class SwordParry : MonoBehaviour
     public GameObject reflectedBullet;
     public float cooldownTime = 5f;
 
+    [SerializeField] Animator animator;
     [SerializeField] private Vector2 hitboxSize = new Vector2(1, 1);
 
     public float currentCooldownTime = 0f;
@@ -36,6 +37,7 @@ public class SwordParry : MonoBehaviour
         if (currentCooldownTime > 0) return;
 
         currentCooldownTime = cooldownTime;
+        animator.SetTrigger("Parry");
 
         CheckBullets();
     }

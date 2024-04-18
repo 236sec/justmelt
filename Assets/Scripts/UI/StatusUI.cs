@@ -27,10 +27,9 @@ public class StatusUI : MonoBehaviour
         hpBar.SetValue((float)playerHealth.currentHP / playerHealth.maxHP);
 
         if (!enemyHealth) {
-            enemyHealth = game.enemy?.GetComponent<EnemyHealth>();
-        }
-
-        if (!enemyHealth) {
+            if (game.enemy) {
+                enemyHealth = game.enemy?.GetComponent<EnemyHealth>();
+            }
             enemyHpBar.gameObject.SetActive(false);
         } else {
             enemyHpBar.gameObject.SetActive(true);

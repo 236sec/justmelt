@@ -38,6 +38,7 @@ public class BulletProperty : MonoBehaviour
             PlayerHealth health = other.GetComponent<PlayerHealth>();
 
             if (health.godMode) return;
+            if (hurtEnemy) return;
 
             health.TakeDamage(damage);
             Destroy(gameObject);
