@@ -3,19 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using BulletPatterns;
+using Unity.VisualScripting;
 
 public class EnemyShoot : MonoBehaviour
 {
     public GameObject bullet;
 
-    bool shooting = false;
-    [SerializeField] private float initialAttackCooldown;
+    public float initialAttackCooldown;
+    public float bulletSpeed = 10f;
     private float attackCooldown;
 
-    private float angleOffset = 0f;
-    private float angleTime = 0f;
-
     Animator animator;
+
+    public enum ShootingModes {
+        None, OneTap, DoubleTap, Radial, Radial3
+    }
+    public ShootingModes currentMode = ShootingModes.OneTap;
+    public List<ShootingModes> availableModes = new() { 
+        ShootingModes.OneTap
+    };
 
     private void Awake() {
         animator = GetComponent<Animator>();
@@ -23,38 +29,60 @@ public class EnemyShoot : MonoBehaviour
 
     void Start()
     {
-        attackCooldown = initialAttackCooldown;    
+        attackCooldown = initialAttackCooldown;
     }
 
-    public void Shoot() {
-        // int[] angles = { -45, 0, 45 };
-        float[] angles = { 0 };
+    public void Shoot(float[] angles) {
         for (int i = 0; i < angles.Length; i++) {
             GameObject bulletObject = Instantiate(bullet, transform.position, transform.rotation);
             BulletProperty bulletProperty = bulletObject.GetComponent<BulletProperty>();
 
-            Vector2 direction = Quaternion.Euler(0, 0, 0 * angleOffset + angles[i]) * Vector2.down;
+            Vector2 direction = Quaternion.Euler(0, 0, angles[i]) 
+                * (GameRound.instance.player.transform.position - transform.position).normalized;
+            bulletProperty.speed = bulletSpeed;
             bulletProperty.SetVelocity(direction * bulletProperty.speed);
         } 
     }
 
-    public void ShootFinished() {
-        shooting = false;
-        attackCooldown = initialAttackCooldown;
-    }
-
     void Update()
     {
-        angleTime += Time.deltaTime;
-        angleOffset = 45f * Mathf.Sin(angleTime);
+        if (GameRound.instance.gameOver) return;
 
         if (attackCooldown <= 0) {
-            if (!shooting) {
-                animator.SetTrigger("Attack");
-                shooting = true;
-            }
+            animator.SetTrigger("Attack");
+            attackCooldown = initialAttackCooldown;
+
+            currentMode = GetRandomMode();
+            StartCoroutine(currentMode.ToString());
         } else {
             attackCooldown -= Time.deltaTime;
         }
+    }
+
+    private ShootingModes GetRandomMode() {
+        return availableModes[Random.Range(0, availableModes.Count)];
+    }
+
+    // Shooting Modes
+
+    public IEnumerator OneTap() {
+        Shoot(new float[] { 0 });
+        yield return new WaitForEndOfFrame();
+    }
+
+    public IEnumerator DoubleTap() {
+        Shoot(new float[] { 0 });
+        yield return new WaitForSeconds(0.1f);
+        Shoot(new float[] { 0 });
+    }
+
+    public IEnumerator Radial() {
+        Shoot(new float[] { -90, -45, 0, 45, 90 });
+        yield return new WaitForEndOfFrame();
+    }
+
+    public IEnumerator Radial3() {
+        Shoot(new float[] { -90, -45, -15, 0, 15, 45, 90 });
+        yield return new WaitForEndOfFrame();
     }
 }

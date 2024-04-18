@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
 
     Vector2 moveDirection;
 
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     private BoxCollider2D coll;
     private SpriteRenderer sprite;
 
@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
+        if (GameRound.instance.gameOver) return;
+
         // Move left or right
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
@@ -53,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate() {
+        if (GameRound.instance.gameOver) return;
         Vector2 dodgeVelocity = currentDodgeSpeed * moveDirection;
 
         rb.velocity = moveDirection * moveSpeed + dodgeVelocity;
@@ -75,6 +78,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Dodge(float speed) {
         if (currentDodgeCooldown > 0) return;
+        if (GameRound.instance.gameOver) return;
+
         currentDodgeSpeed = speed;
         currentDodgeCooldown = dodgeCooldown;
     }

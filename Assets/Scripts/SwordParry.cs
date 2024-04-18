@@ -21,9 +21,11 @@ public class SwordParry : MonoBehaviour
         }
     }
 
+#if UNITY_EDITOR
     private void OnDrawGizmosSelected() {
         UnityEditor.Handles.DrawWireCube(transform.position, hitboxSize);
     }
+#endif
 
     private void CheckBullets() {
         Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, hitboxSize, 0);
