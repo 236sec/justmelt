@@ -169,10 +169,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   reflectedBullet: {fileID: 2296172525879234472, guid: 8395715b2e7151e4d9acb1e6eddfaba1, type: 3}
   cooldownTime: 1
-  parryDuration: 1
   hitboxSize: {x: 2, y: 1}
   currentCooldownTime: 0
-  parrying: 0
 --- !u!1 &785888770
 GameObject:
   m_ObjectHideFlags: 0

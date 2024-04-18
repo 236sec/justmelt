@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 2accb5c8107b6004295250818649eeca
+guid: 4424e8f603dcae1429a2abda6121442f
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -123,7 +123,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Red Bullet 1_0
+      name: Blue Bullet_0
       rect:
         serializedVersion: 2
         x: 0
@@ -137,14 +137,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 596397f276f55764db56d088f99a0090
-      internalID: -1755498120
+      spriteID: f6185f06f1a3fbb44b65dd6171ce4722
+      internalID: -632411313
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red Bullet 1_1
+      name: Blue Bullet_1
       rect:
         serializedVersion: 2
         x: 16
@@ -158,14 +158,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7620e10cc67595044b8b60860d0af12e
-      internalID: 865556483
+      spriteID: b3ef83f0f17cb1d44bd75a1a969f5a33
+      internalID: -228234195
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red Bullet 1_2
+      name: Blue Bullet_2
       rect:
         serializedVersion: 2
         x: 32
@@ -179,14 +179,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b686db9197cf0c44e8655ea9e91b3926
-      internalID: -1690943922
+      spriteID: 085fc4999b591c34ea26ed9b817ccd7f
+      internalID: 1943940567
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Red Bullet 1_3
+      name: Blue Bullet_3
       rect:
         serializedVersion: 2
         x: 48
@@ -200,8 +200,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bfac2063f8cebf240af82c7265eae12d
-      internalID: -247446970
+      spriteID: b39d0f898ec32c74d8effba987c60e87
+      internalID: -1219779306
       vertices: []
       indices: 
       edges: []
@@ -217,10 +217,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Red Bullet 1_0: -1755498120
-      Red Bullet 1_1: 865556483
-      Red Bullet 1_2: -1690943922
-      Red Bullet 1_3: -247446970
+      Blue Bullet_0: -632411313
+      Blue Bullet_1: -228234195
+      Blue Bullet_2: 1943940567
+      Blue Bullet_3: -1219779306
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
