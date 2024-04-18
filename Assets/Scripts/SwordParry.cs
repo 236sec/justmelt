@@ -4,33 +4,51 @@ using UnityEngine;
 
 public class SwordParry : MonoBehaviour
 {
-    public GameObject reflectedBullet; 
+    public GameObject reflectedBullet;
+    public float cooldownTime = 5f;
 
-    void Start()
-    {
-        
+    [SerializeField] private Vector2 hitboxSize = new Vector2(1, 1);
+
+    [SerializeField] private float currentCooldownTime = 0f;
+
+    private void FixedUpdate() {
+        if (currentCooldownTime > 0) {
+            currentCooldownTime -= Time.fixedDeltaTime;
+        }
+        else {
+            currentCooldownTime = 0f;
+        }
     }
 
-    void Update()
-    {
-
+    private void OnDrawGizmosSelected() {
+        UnityEditor.Handles.DrawWireCube(transform.position, hitboxSize);
     }
 
-    void OnTriggerEnter2D(Collider2D other)
-    {
+    private void CheckBullets() {
+        Collider2D[] colliders = Physics2D.OverlapBoxAll(transform.position, hitboxSize, 0);
+
+        foreach (Collider2D collider in colliders) {
+            ParryBullet(collider);
+            Debug.Log(collider.gameObject.name);
+        }
+    }
+
+    public void Parry() {
+        if (currentCooldownTime > 0) return;
+
+        currentCooldownTime = cooldownTime;
+
+        CheckBullets();
+    }
+
+    void ParryBullet(Collider2D other) {
         BulletTag bTag = other.gameObject.GetComponent<BulletTag>();
         BulletProperty bProp = other.gameObject.GetComponent<BulletProperty>();
 
-        if (bTag != null)   
-        {
+        if (bTag != null) {
             Debug.Log("Sword Block");
-            GameObject reflectedB = Instantiate(reflectedBullet, transform.position, transform.rotation);
+            GameObject reflectedB = Instantiate(reflectedBullet, other.transform.position, other.transform.rotation);
             BulletProperty reflectedBp = reflectedB.GetComponent<BulletProperty>();
-
-            // Rigidbody2D reflectedRb = reflectedB.GetComponent<Rigidbody2D>();
-            // reflectedRb.velocity = Vector2.left * bProp.speed;
-
-            // Vector2 reflectedVector = Vector2.Reflect(bProp.GetVelocity().normalized, Vector2.up);
 
             reflectedBp.SetVelocity(-bProp.GetVelocity());
 

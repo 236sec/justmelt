@@ -1,11 +1,22 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float moveSpeed = 5f;
     [SerializeField] private float dodgeSpeed = 25f;
+    [SerializeField] private float dodgeCooldown = 5f;
+
+    [SerializeField] private SwordParry swordParry;
+
+    private PlayerHealth playerHealth;
+
+    private float currentDodgeSpeed = 0f;
+    private float currentDodgeCooldown = 0f;
+
+    Vector2 moveDirection;
 
     private Rigidbody2D rb;
     private BoxCollider2D coll;
@@ -13,12 +24,15 @@ public class PlayerMovement : MonoBehaviour
 
     private enum MovementState {idle,running,jumping,falling}
 
-    private void Start()
-    {
+    private void Awake() {
+        playerHealth = GetComponent<PlayerHealth>();
         rb = GetComponent<Rigidbody2D>();
         coll = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
-        // Freeze rotation along the Z-axis
+    }
+
+    private void Start()
+    {
         rb.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
@@ -27,16 +41,41 @@ public class PlayerMovement : MonoBehaviour
         // Move left or right
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
-        Vector2 movementDirection = new Vector2(horizontalInput, verticalInput).normalized;
-        rb.velocity = movementDirection * moveSpeed;
+        moveDirection = new Vector2(horizontalInput, verticalInput).normalized;
 
         if (Input.GetKeyDown(KeyCode.LeftShift)) {
-            Debug.Log(movementDirection);
-            Dodge(movementDirection);
+            Dodge(dodgeSpeed);
+        }
+
+        if (Input.GetMouseButtonDown(0)) {
+            swordParry.Parry();
         }
     }
 
-    private void Dodge(Vector2 direction) {
-        rb.AddForce(direction * dodgeSpeed, ForceMode2D.Impulse);
+    private void FixedUpdate() {
+        Vector2 dodgeVelocity = currentDodgeSpeed * moveDirection;
+
+        rb.velocity = moveDirection * moveSpeed + dodgeVelocity;
+        currentDodgeSpeed = Mathf.Lerp(currentDodgeSpeed, 0, 0.1f);
+
+        if (currentDodgeCooldown > 0) {
+            currentDodgeCooldown -= Time.fixedDeltaTime;
+        }
+        else {
+            currentDodgeCooldown = 0;
+        }
+
+        if (currentDodgeSpeed >= 0.25f * dodgeSpeed) {
+            playerHealth.godMode = true;
+        }
+        else {
+            playerHealth.godMode = false;
+        }
+    }
+
+    private void Dodge(float speed) {
+        if (currentDodgeCooldown > 0) return;
+        currentDodgeSpeed = speed;
+        currentDodgeCooldown = dodgeCooldown;
     }
 }
