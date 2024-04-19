@@ -61,9 +61,7 @@ public class GameRound : MonoBehaviour
 
             SaveBestScore();
 
-            player.GetComponent<SpriteRenderer>().enabled = false;
-            gameOverUI.SetActive(true);
-            StartCoroutine(gameOverUI.GetComponent<GameOverUI>().Show());
+            StartCoroutine(GameOver());
         }
 
         if (score > bestScore) {
@@ -126,6 +124,16 @@ public class GameRound : MonoBehaviour
         }
     }
 
+    IEnumerator GameOver() {
+        player.GetComponent<Animator>().SetBool("Dead", true);
+
+        yield return new WaitForSeconds(1);
+
+        gameOverUI.SetActive(true);
+
+        yield return gameOverUI.GetComponent<GameOverUI>().Show();
+    }
+
     public float GetEnemyCooldown(int round) {
         return Mathf.Max(minimumCooldown, -cooldownRegression * (round - 1) + initialCooldown);
     }
@@ -144,7 +152,7 @@ public class GameRound : MonoBehaviour
     public void Upgrade(UpgradeTypes type) {
         switch (type) {
             case UpgradeTypes.Vitality:
-                playerHealth.maxHP += Mathf.CeilToInt(playerHealth.maxHP * 0.5f);
+                playerHealth.maxHP += Mathf.CeilToInt(playerHealth.maxHP * 0.25f);
                 playerHealth.currentHP = playerHealth.maxHP;
                 break;
             case UpgradeTypes.FastHands:
